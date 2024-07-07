@@ -1,0 +1,4 @@
+[toolchain]
+channel = "{{channel}}"
+profile = "default"
+components = ["rust-analyzer"]

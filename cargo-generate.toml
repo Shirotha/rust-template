@@ -1,0 +1,23 @@
+[template]
+cargo_generate_version = ">=0.10.0"
+
+[placeholders.author]
+prompt = "primary crate author"
+type = "string"
+
+[placeholders.description]
+prompt = "crate description"
+type = "string"
+
+[placeholders.toolchain]
+prompt = "toolchain"
+regex = '\d+\.\d+\.\d+|nightly'
+type = "string"
+
+[hooks]
+init = ["license.rhai"]
+pre = ["channel.rhai"]
+
+
+[conditional.'crate_type != "bin"']
+ignore = ["src/main.rs"]
