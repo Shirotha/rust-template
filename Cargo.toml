@@ -1,15 +1,21 @@
 [workspace]
+resolver = "2"
 members = [
 #  "crates/*",
 ]
 
-[package]
-name = "{{crate_name}}"
+[workspace.package]
 authors = ["{{author}}"]
-description = "{{description}}"
-repository = "https://github.com/{{author}}/{{crate_name}}"
 version = "0.1.0"
 edition = "2021"
+
+[package]
+name = "{{crate_name}}"
+authors.workspace = true
+description = "{{description}}"
+repository = "https://github.com/{{author}}/{{crate_name}}"
+version.workspace = true
+edition.workspace = true
 
 
 [profile.release]
