@@ -4,6 +4,8 @@ Build = "build --release"
 B = "Build"
 Run = "run --release"
 R = "Run"
+Test = "test --profile debugger"
+T = "Test"
 
 
 
