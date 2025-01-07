@@ -10,7 +10,6 @@ T = "Test"
 
 
 [build]
-incremental = true
 rustflags = [
   "-C", "link-arg=-fuse-ld=lld",
   "-C", "symbol-mangling-version=v0",
@@ -34,7 +33,8 @@ opt-level = 3
 
 
 [profile.dev]
-opt-level = 0
+opt-level = 1
+incremental = true
 codegen-units = 256
 lto = false
 debug = 1
@@ -49,6 +49,7 @@ codegen-units = 256
 
 [profile.debugger]
 inherits = "dev"
+opt-level = 0
 debug = 2
 
 
