@@ -1,4 +1,12 @@
 [toolchain]
 channel = "{{channel}}"
 profile = "default"
-components = ["rust-analyzer"]
+components = [
+    "rust-analyzer",
+{%- if toolchain == "nightly" %}
+    "rustc-codegen-cranelift-preview",
+{%- endif -%}
+{%- if toolchain == "nightly" or os-arch contains "windows" %}
+    "llvm-tools-preview",
+{% endif -%}
+]

@@ -1,3 +1,11 @@
+{%- if toolchain == "nightly" -%}
+[unstable]
+codegen-backend = true
+profile-rustflags = true
+
+
+
+{% endif -%}
 [alias]
 debug = "build --profile debugger"
 Build = "build --release"
@@ -6,16 +14,21 @@ Run = "run --release"
 R = "Run"
 Test = "test --profile debugger"
 T = "Test"
+bcompact = "build --profile release-compact"
+bc = "bcompact"
+BCompact = "build --profile release-very-compact"
+BC = "BCompact"
+rcompact = "run --profile release-compact"
+rc = "rcompact"
+RCompact = "run --profile release-very-compact"
+RC = "RCompact"
 
 
 
 [build]
 rustflags = [
-  "-C", "link-arg=-fuse-ld=lld",
   "-C", "symbol-mangling-version=v0",
   "-C", "target-cpu=native",
-  # TODO: move this into profile.release once cargo feature `profile-rustflags` becomes stable
-  "-Z", "share-generics=y",
 ]
 
 
@@ -27,12 +40,28 @@ lto = "fat"
 debug = false
 panic = "abort"
 strip = "debuginfo"
+{%- if toolchain == "nightly" %}
+rustflags = [
+  "-Z", "share-generics=y",
+]
+{% endif %}
 
 [profile.release.package."*"]
 opt-level = 3
 
+[profile.release-compact]
+inherits = "release"
+opt-level = "s"
+
+[profile.release-very-compact]
+inherits = "release"
+opt-level = "z"
+
 
 [profile.dev]
+{%- if toolchain == "nightly" %}
+codegen-backend = "cranelift"
+{% endif -%}
 opt-level = 1
 incremental = true
 codegen-units = 256
@@ -40,6 +69,9 @@ lto = false
 debug = 1
 
 [profile.dev.package."*"]
+{%- if toolchain == "nightly" %}
+codegen-backend = "llvm"
+{% endif -%}
 opt-level = 3
 
 
@@ -53,7 +85,11 @@ opt-level = 0
 debug = 2
 
 
+[target.x86_64-pc-windows-msvc]
+linker = "rust-lld.exe"
+
 [target.x86_64-unknown-linux-gnu]
+linker = "clang"
 rustflags = [
-  "-C", "linker=clang",
+  "-C", "link-arg=-fuse-ld=mold",
 ]
