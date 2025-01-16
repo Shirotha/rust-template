@@ -1,2 +1,2 @@
-# {{crate_name}}
+# {{project-name}}
 {{description}}

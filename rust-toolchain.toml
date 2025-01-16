@@ -1,12 +1,15 @@
 [toolchain]
 channel = "{{channel}}"
-profile = "default"
+profile = "minimal"
 components = [
+    "rustfmt",
+    "clippy",
     "rust-analyzer",
 {%- if toolchain == "nightly" %}
+    # "miri",
     "rustc-codegen-cranelift-preview",
-{%- endif -%}
+{%- endif %}
 {%- if toolchain == "nightly" or os-arch contains "windows" %}
     "llvm-tools-preview",
-{% endif -%}
+{%- endif %}
 ]

@@ -44,7 +44,7 @@ strip = "debuginfo"
 rustflags = [
   "-Z", "share-generics=y",
 ]
-{% endif %}
+{%- endif %}
 
 [profile.release.package."*"]
 opt-level = 3
@@ -61,7 +61,7 @@ opt-level = "z"
 [profile.dev]
 {%- if toolchain == "nightly" %}
 codegen-backend = "cranelift"
-{% endif -%}
+{%- endif %}
 opt-level = 1
 incremental = true
 codegen-units = 256
@@ -71,7 +71,7 @@ debug = 1
 [profile.dev.package."*"]
 {%- if toolchain == "nightly" %}
 codegen-backend = "llvm"
-{% endif -%}
+{%- endif %}
 opt-level = 3
 
 
