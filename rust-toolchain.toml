@@ -3,7 +3,11 @@ channel = "{{channel}}"
 profile = "minimal"
 components = [
     "rustfmt",
+{%- if toolchain == "nightly" %}
+    "clippy-preview",
+{%- else %}
     "clippy",
+{%- endif %}
     "rust-analyzer",
 {%- if toolchain == "nightly" %}
     # "miri",
