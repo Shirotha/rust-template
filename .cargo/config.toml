@@ -81,6 +81,9 @@ codegen-units = 256
 
 [profile.debugger]
 inherits = "dev"
+{%- if toolchain == "nightly" %}
+codegen-backend = "llvm"
+{%- endif %}
 opt-level = 0
 debug = 2
 
